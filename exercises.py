@@ -282,13 +282,29 @@ def remove_substring(substring, string):
     Returns string with all occurrences of substring removed.
     """
     snew = ""
-    x0 = string[0]; x1 = string[1]
-    for x in string[2:]:
-        stmp = x0 + x1 + x
-        if stmp is not substring: 
-            snew += x0
-        x0 = x1
-        x1 = x
+    sl = len(string)
+    same_1 = False; same_2 = False
+    for i in range(sl-2):
+        if same_1:
+            same_2 = True
+            same_1 = False
+            continue
+        if same_2:
+            same_2 = False
+            continue 
+
+        subs = string[i:i+3]
+        same_this = True
+        for j in range(3):
+            if subs[j] != substring[j]:
+                same_this = False
+        if same_this is False:
+            if i == sl-3:
+                snew += subs
+            else:
+                snew += subs[0]
+        else:
+            same_1 = True
 
     return snew
 
