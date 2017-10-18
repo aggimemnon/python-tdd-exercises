@@ -324,7 +324,16 @@ def get_position_indices(triplet, dna):
     in a DNA sequence. We start counting from 0
     and jump by 3 characters from one position to the next.
     """
-    return None
+    l = len(dna)
+    li = l/3
+    lp = []
+    for i in range(int(li)):
+        ind = 3*i
+        subs = dna[ind:ind+3]
+        if triplet[0] is subs[0] and triplet[1] is subs[1] and triplet[2] is subs[2]:
+            lp.append(i)
+
+    return lp
 
 
 def test_get_position_indices():
