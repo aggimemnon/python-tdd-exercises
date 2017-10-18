@@ -3,7 +3,7 @@ def reverse_list(l):
     """
     Reverses order of elements in list l.
     """
-    return None
+    return l[::-1]
 
 
 def test_reverse_list():
@@ -16,7 +16,7 @@ def reverse_string(s):
     """
     Reverses order of characters in string s.
     """
-    return None
+    return s[::-1]
 
 
 def test_reverse_string():
@@ -30,7 +30,15 @@ def is_english_vowel(c):
     Returns True if c is an english vowel
     and False otherwise.
     """
-    return None
+
+    #Create list of all vowels
+    vowels = (['a','e','i','o','u','y',
+        'A','E','I','O','U','Y'])
+    for x in vowels:
+        if x is c:
+            return True
+
+    return False
 
 
 def test_is_english_vowel():
@@ -57,7 +65,12 @@ def count_num_vowels(s):
     """
     Returns the number of vowels in a string s.
     """
-    return None
+    nbr_vowels = 0 
+    for x in s:
+        if is_english_vowel(x):
+            nbr_vowels += 1
+
+    return nbr_vowels
 
 
 def test_count_num_vowels():
@@ -79,7 +92,14 @@ def histogram(l):
     """
     Converts a list of integers into a simple string histogram.
     """
-    return None
+    s = ""
+    for x in l:
+        for y in range(x):
+            s += "#"
+        if x is not l[-1]:
+            s += "\n"
+
+    return s
 
 
 def test_histogram():
@@ -93,7 +113,16 @@ def get_word_lengths(s):
     Returns a list of integers representing
     the word lengths in string s.
     """
-    return None
+    l = [] 
+    wlength = 0
+    for x in s:
+        if x is " ":
+            l.append(wlength)
+            wlength = 0
+        else:
+            wlength += 1
+    l.append(wlength)
+    return l 
 
 
 def test_get_word_lengths():
@@ -108,7 +137,20 @@ def find_longest_word(s):
     Returns the longest word in string s.
     In case there are several, return the first.
     """
-    return None
+    mmax = 0 
+    word = ""
+    wlength = 0 
+    for x in s:
+        if x is " ":
+            if wlength > mmax:
+                maxword = word
+                mmax = wlength
+            word = ""
+            wlength = 0
+        else:
+            wlength += 1
+            word += x
+    return maxword 
 
 
 def test_find_longest_word():
@@ -125,8 +167,18 @@ def validate_dna(s):
     Return True if the DNA string only contains characters
     a, c, t, or g (lower or uppercase). False otherwise.
     """
-    return None
+    l = ['a','c','t','g','A','C','T','G']
 
+    samecnt = 0
+    for x in s:
+        for y in l:
+            if x is y:
+                samecnt += 1
+                break 
+    if len(s) is samecnt:
+        return True 
+    else:
+        return False
 
 def test_validate_dna():
     assert validate_dna('CCGGAAGAGCTTACTTAGccggaagagcttacttag')
@@ -142,7 +194,12 @@ def base_pair(c):
     of the base pair. If the base is not recognized,
     return 'unknown'.
     """
-    return None
+    d = {'a':'t','t':'a','c':'g','g':'c','A':'t','T':'a','C':'g','G':'c'}
+
+    if d.get(c,0) is 0:
+        return 'unknown'
+    else:
+        return d.get(c)
 
 
 def test_base_pair():
@@ -165,7 +222,15 @@ def transcribe_dna_to_rna(s):
     Return string s with each letter T replaced by U.
     Result is always uppercase.
     """
-    return None
+    s = s.upper()
+    snew = ""
+    for x in s:
+        if x is "T":
+            snew += "U"
+        else:
+            snew += x
+
+    return snew
 
 
 def test_transcribe_dna_to_rna():
@@ -180,7 +245,12 @@ def get_complement(s):
     Return the DNA complement in uppercase
     (A -> T, T-> A, C -> G, G-> C).
     """
-    return None
+    snew = ""
+    for x in s:
+        y = base_pair(x)
+        snew += y.upper()
+
+    return snew
 
 
 def test_get_complement():
@@ -195,7 +265,9 @@ def get_reverse_complement(s):
     Return the reverse complement of string s
     (complement reversed in order).
     """
-    return None
+    scomp = get_complement(s)
+
+    return reverse_list(scomp)
 
 
 def test_get_reverse_complement():
@@ -209,7 +281,16 @@ def remove_substring(substring, string):
     """
     Returns string with all occurrences of substring removed.
     """
-    return None
+    snew = ""
+    x0 = string[0]; x1 = string[1]
+    for x in string[2:]:
+        stmp = x0 + x1 + x
+        if stmp is not substring: 
+            snew += x0
+        x0 = x1
+        x1 = x
+
+    return snew
 
 
 def test_remove_substring():
